@@ -5,7 +5,9 @@ class window.HandView extends Backbone.View
 
   initialize: ->
     @collection.on 'add remove change', => @render()
+    @collection.on 'bust', => @renderBust()
     @render()
+
 
   render: ->
     @$el.children().detach()
@@ -13,4 +15,12 @@ class window.HandView extends Backbone.View
     @$el.append @collection.map (card) ->
       new CardView(model: card).$el
     @$('.score').text @collection.scores()[0]
+
+
+  renderBust: ->
+    @$el.append $('<div id="busted"></div>').text('busted');
+
+
+  # bust: ->
+  #   console.log([@collection.scores()[0], @collection.bust, "HandView bust"])
 
