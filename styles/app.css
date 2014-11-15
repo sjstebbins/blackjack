@@ -1,25 +1,32 @@
 .card {
+  text-align: center;
+  position: relative;
   float: left;
   border: solid 1px black;
-  width: 100px;
+  width: 120px;
   border-radius: 5px;
-  height: 140px;
+  height: 170px;
   margin-right: 20px;
-  background-image: url('http://www.perl.com/pub/2012/11/blank.jpg');
-  background-size: 100%;
 }
 
 .covered {
   background-image: url('http://chetart.com/blog/wp-content/uploads/2012/05/playing-card-back.jpg');
   background-size: 100%;
   color: transparent;
+  z-index: 100;
 }
 
 .hand {
   overflow: auto;
 }
 #busted{
+  height: 190px;
   background-image: url('http://img4.wikia.nocookie.net/__cb20141105000501/epicrapbattlesofhistory/images/8/8e/Busted.gif');
   background-width:50%;
+  background-repeat: no-repeat;
   z-index: 100;
+  position: relative;
+}
+.show-false {
+  display: none;
 }

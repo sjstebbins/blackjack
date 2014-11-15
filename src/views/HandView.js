@@ -39,7 +39,7 @@ window.HandView = (function(_super) {
   };
 
   HandView.prototype.renderBust = function() {
-    return this.$el.append($('<div id="busted"></div>').text('busted'));
+    return this.$el.append($('<div id="busted"></div>'));
   };
 
   return HandView;

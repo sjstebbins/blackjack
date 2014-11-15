@@ -18,7 +18,7 @@ class window.HandView extends Backbone.View
 
 
   renderBust: ->
-    @$el.append $('<div id="busted"></div>').text('busted');
+    @$el.append $('<div id="busted"></div>')
 
 
   # bust: ->

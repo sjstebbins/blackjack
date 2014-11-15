@@ -9,11 +9,23 @@ class window.Hand extends Backbone.Collection
     x = @deck.last()
     @add(@deck.pop())
     if @scores()[0] > 21
-      @.trigger("bust");
+      @.trigger("bust")
     x
 
-  stand: ->
+  stand: (playerhand) ->
     @.at(0).flip()
+    @hit() while @scores()[0] <= 17
+    if @scores()[0] > 21
+      @.trigger("bust")
+      @.trigger("playerWin")
+    #needs logic for dealer hand > player hand
+    #passed in playAerhand fromAppView.coffee line 10
+    if @scores()[0] > playerhand.scores()[0]
+      @.trigger("playerLose")
+    else if @scores()[0] < playerhand.scores()[0]
+      @.trigger("playerWin")
+    else
+      @.trigger("tie")
 
   hasAce: -> @reduce (memo, card) ->
     memo or card.get('value') is 1

@@ -16,7 +16,16 @@ window.AppView = (function(_super) {
       return this.model.get('playerHand').hit();
     },
     'click .stand-button': function() {
-      return this.model.get('dealerHand').stand();
+      return this.model.get('dealerHand').stand(this.model.get('playerHand'));
+    },
+    'playerWin': function() {
+      return this.win();
+    },
+    'playerLose': function() {
+      return this.lose();
+    },
+    'tie': function() {
+      return this.tie();
     }
   };
 
@@ -33,6 +42,27 @@ window.AppView = (function(_super) {
     return this.$('.dealer-hand-container').html(new HandView({
       collection: this.model.get('dealerHand')
     }).el);
+  };
+
+  AppView.prototype.win = function() {
+    var node;
+    console.log("won");
+    node = $('<span></span>').text("PLAYER WINS");
+    return this.$el.prepend(node);
+  };
+
+  AppView.prototype.lose = function() {
+    var node;
+    console.log("lost");
+    node = $('<span></span>').text("PLAYER LOSES");
+    return this.$el.prepend(node);
+  };
+
+  AppView.prototype.tie = function() {
+    var node;
+    console.log("tie");
+    node = $('<span></span>').text("TIE GAME");
+    return this.$el.prepend(node);
   };
 
   return AppView;

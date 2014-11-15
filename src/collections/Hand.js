@@ -26,8 +26,22 @@ window.Hand = (function(_super) {
     return x;
   };
 
-  Hand.prototype.stand = function() {
-    return this.at(0).flip();
+  Hand.prototype.stand = function(playerhand) {
+    this.at(0).flip();
+    while (this.scores()[0] <= 17) {
+      this.hit();
+    }
+    if (this.scores()[0] > 21) {
+      this.trigger("bust");
+      this.trigger("playerWin");
+    }
+    if (this.scores()[0] > playerhand.scores()[0]) {
+      return this.trigger("playerLose");
+    } else if (this.scores()[0] < playerhand.scores()[0]) {
+      return this.trigger("playerWin");
+    } else {
+      return this.trigger("tie");
+    }
   };
 
   Hand.prototype.hasAce = function() {
