@@ -20,8 +20,10 @@ window.Hand = (function(_super) {
     var x;
     x = this.deck.last();
     this.add(this.deck.pop());
-    if (this.scores()[0] > 21) {
+    if (this.scores()[0] > 21 && !this.isDealer) {
       this.trigger("bust");
+      this.bust = true;
+      this.trigger("playerLose");
     }
     return x;
   };
@@ -33,9 +35,9 @@ window.Hand = (function(_super) {
     }
     if (this.scores()[0] > 21) {
       this.trigger("bust");
-      this.trigger("playerWin");
-    }
-    if (this.scores()[0] > playerhand.scores()[0]) {
+      this.bust = true;
+      return this.trigger("playerWin");
+    } else if (this.scores()[0] > playerhand.scores()[0]) {
       return this.trigger("playerLose");
     } else if (this.scores()[0] < playerhand.scores()[0]) {
       return this.trigger("playerWin");

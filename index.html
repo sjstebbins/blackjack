@@ -4,6 +4,24 @@
     <link href="styles/app.css" rel="stylesheet" type="text/css" media="screen">
   </head>
   <body>
+    <!-- <audio autoplay>
+    <source src="http://maninthemaze.com/images/05_-_For_The_Love_Of_Money__Album_Version_.mp3" type="audio/mpeg">
+    </audio> -->
+
+
+    <video autoplay loop id="bgvid">
+    <source src="http://ak.picdn.net/shutterstock/videos/3019060/preview/stock-footage-casino-roulette-wheel-loop.mp4" type="video/mp4">
+    </video>
+
+        <!-- Load c3.css -->
+    <link href="bower_components/c3/c3.css" rel="stylesheet" type="text/css">
+
+    <!-- Load d3.js and c3.js -->
+    <script src="bower_components/d3/d3.min.js" charset="utf-8"></script>
+    <script src="bower_components/c3/c3.min.js"></script>
+
+
+
     <script src="lib/jquery.js"></script>
     <script src="lib/underscore.js"></script>
     <script src="lib/backbone.js"></script>
@@ -11,11 +29,15 @@
     <script src="compiled/src/models/Card.js"></script>
     <script src="compiled/src/collections/Hand.js"></script>
     <script src="compiled/src/collections/Deck.js"></script>
+    <script src="compiled/src/models/Graph.js"></script>
     <script src="compiled/src/models/App.js"></script>
+
 
     <script src="compiled/src/views/CardView.js"></script>
     <script src="compiled/src/views/HandView.js"></script>
+    <script src="compiled/src/views/GraphView.js"></script>
     <script src="compiled/src/views/AppView.js"></script>
+
 
     <script src="compiled/src/main.js"></script>
   </body>

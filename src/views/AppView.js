@@ -9,28 +9,43 @@ window.AppView = (function(_super) {
     return AppView.__super__.constructor.apply(this, arguments);
   }
 
-  AppView.prototype.template = _.template('<button class="hit-button">Hit</button> <button class="stand-button">Stand</button> <div class="player-hand-container"></div> <div class="dealer-hand-container"></div>');
+  AppView.prototype.template = _.template('<button class="hit-button">Hit</button> <button class="stand-button">Stand</button> <button class="reset-button">New Deal</button> <div class="player-hand-container"></div> <div class="dealer-hand-container"></div>');
 
   AppView.prototype.events = {
     'click .hit-button': function() {
-      return this.model.get('playerHand').hit();
+      return this.hit();
     },
     'click .stand-button': function() {
-      return this.model.get('dealerHand').stand(this.model.get('playerHand'));
+      return this.stand();
     },
-    'playerWin': function() {
-      return this.win();
-    },
-    'playerLose': function() {
-      return this.lose();
-    },
-    'tie': function() {
-      return this.tie();
+    'click .reset-button': function() {
+      return this.reset();
     }
   };
 
   AppView.prototype.initialize = function() {
-    return this.render();
+    this.model.get('playerHand').on('playerLose', (function(_this) {
+      return function() {
+        return _this.lose();
+      };
+    })(this));
+    this.model.get('dealerHand').on('playerWin', (function(_this) {
+      return function() {
+        return _this.win();
+      };
+    })(this));
+    this.model.get('dealerHand').on('playerLose', (function(_this) {
+      return function() {
+        return _this.lose();
+      };
+    })(this));
+    this.model.get('dealerHand').on('tie', (function(_this) {
+      return function() {
+        return _this.tie();
+      };
+    })(this));
+    this.render();
+    return this.buttonclicks = true;
   };
 
   AppView.prototype.render = function() {
@@ -44,25 +59,44 @@ window.AppView = (function(_super) {
     }).el);
   };
 
+  AppView.prototype.stand = function() {
+    if (this.buttonclicks) {
+      return this.model.get('dealerHand').stand(this.model.get('playerHand'));
+    }
+  };
+
+  AppView.prototype.hit = function() {
+    if (this.buttonclicks) {
+      return this.model.get('playerHand').hit();
+    }
+  };
+
   AppView.prototype.win = function() {
     var node;
-    console.log("won");
-    node = $('<span></span>').text("PLAYER WINS");
-    return this.$el.prepend(node);
+    node = $('<span></span>').text("PLAYER WINS").addClass("outcome");
+    this.$el.append(node);
+    return this.buttonclicks = false;
   };
 
   AppView.prototype.lose = function() {
     var node;
-    console.log("lost");
-    node = $('<span></span>').text("PLAYER LOSES");
-    return this.$el.prepend(node);
+    node = $('<span></span>').text("PLAYER LOSES").addClass("outcome");
+    this.$el.append(node);
+    return this.buttonclicks = false;
   };
 
   AppView.prototype.tie = function() {
     var node;
-    console.log("tie");
-    node = $('<span></span>').text("TIE GAME");
-    return this.$el.prepend(node);
+    node = $('<span></span>').text("TIE GAME").addClass("outcome");
+    this.$el.append(node);
+    return this.buttonclicks = false;
+  };
+
+  AppView.prototype.reset = function() {
+    $('body').find('.blackjack').html('');
+    return new AppView({
+      model: new App()
+    }).$el.appendTo('.blackjack');
   };
 
   return AppView;

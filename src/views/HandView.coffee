@@ -12,6 +12,7 @@ class window.HandView extends Backbone.View
   render: ->
     @$el.children().detach()
     @$el.html @template @collection
+    @$el.addClass("titleBars")
     @$el.append @collection.map (card) ->
       new CardView(model: card).$el
     @$('.score').text @collection.scores()[0]
@@ -19,8 +20,3 @@ class window.HandView extends Backbone.View
 
   renderBust: ->
     @$el.append $('<div id="busted"></div>')
-
-
-  # bust: ->
-  #   console.log([@collection.scores()[0], @collection.bust, "HandView bust"])
-
